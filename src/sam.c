@@ -311,7 +311,7 @@ int ucsend(unsigned long addr, char *buf, size_t len)
 	VERBOSE(0, "Sending data to RAM using ");
 	VERBOSE(0, "%s", ucprot(-1) ? "XModem" : "RAW");
 	VERBOSE(0, " protocol with block size %d bytes.\n", XM_SIZE);
-	VERBOSE(0, "Bytes: %d, Blocks: %d\n", len,  blockcount);
+	VERBOSE(0, "Bytes: %zu, Blocks: %d\n", len,  blockcount);
 	count = len;
 	while (count > 0) {
 		VERBOSE(0, "\rSending Block %d / %d ", block, blockcount);
@@ -429,7 +429,7 @@ int ucrecv(unsigned long addr, char *buf, size_t len)
 	VERBOSE(0, "Receiving data from memory using ");
 	VERBOSE(0, "%s", ucprot(-1) ? "XModem" : "RAW");
 	VERBOSE(0, " protocol with block size %d bytes.\n", XM_SIZE);
-	VERBOSE(0, "Bytes: %d, Blocks: %d\n", len,  blockcount);
+	VERBOSE(0, "Bytes: %zu, Blocks: %d\n", len,  blockcount);
 	count = len;
 	while (count > 0) {
 		int remainder = count > XM_SIZE ? XM_SIZE : count;
@@ -513,7 +513,7 @@ int ucflash(unsigned long addr, char *buf, size_t len)
 	retval = ucread(CIDR, &cidr);
 	if (retval < 0)
 		return retval;
-	VERBOSE(0, "0x%08X\n", cidr);
+	VERBOSE(0, "0x%08lX\n", cidr);
 
 	ucshowproc(cidr, "");
 	if (ucnvpsiz(cidr) < 0) {
@@ -537,8 +537,8 @@ int ucflash(unsigned long addr, char *buf, size_t len)
 	pages = len / pagesize;
 	if (len % pagesize)
 		pages++;
-	VERBOSE(0, "Programming Flash with page size %d\n", pagesize);
-	VERBOSE(0, "Bytes: %d, Pages: %d\n", len, pages);
+	VERBOSE(0, "Programming Flash with page size %lu\n", pagesize);
+	VERBOSE(0, "Bytes: %zu, Pages: %d\n", len, pages);
 	page = 1;
 	count = len;
 	while (count > 0) {
@@ -566,7 +566,7 @@ int ucflash(unsigned long addr, char *buf, size_t len)
 		retval = ucread(RETVAL, &sr);
 		if (retval < 0)
 			return retval;
-		VERBOSE(1, "sambaflash retval = 0x%08X\n", sr);
+		VERBOSE(1, "sambaflash retval = 0x%08lX\n", sr);
 		retval = (signed int)sr;
 		if (retval) {
 			fprintf(stderr, "\nError while programming page!\nReturn value: %d\n", retval);
@@ -585,7 +585,7 @@ int ucflash(unsigned long addr, char *buf, size_t len)
 
 void ucshowproc(unsigned long cidr, char *prefix)
 {
-	printf("%sVersion:\t%d\n", prefix, CIDR_VERSION(cidr));
+	printf("%sVersion:\t%lu\n", prefix, CIDR_VERSION(cidr));
 
 	printf("%sProcessor:\t", prefix);
 	switch (CIDR_EPROC(cidr)) {
@@ -993,7 +993,7 @@ int ucsetlocks(unsigned long value)
 		return ERR_INCOMPLETE;
 	}
 
-	VERBOSE(0, "%s%d detected with %d LOCKS bits, page size %d bytes and %d pages per lock region.\n", ucarch(cidr), ucnvpsiz(cidr), locks, pagesize, pagesize >> 2);
+	VERBOSE(0, "%s%d detected with %d LOCKS bits, page size %lu bytes and %lu pages per lock region.\n", ucarch(cidr), ucnvpsiz(cidr), locks, pagesize, pagesize >> 2);
 
 	retval = ucflashinit();
 	if (retval)

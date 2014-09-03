@@ -116,7 +116,7 @@ const struct cmd_t cmd_list[] = {
 				"\tbaud\t- baudrate\n"
 				"Baudrate supported:\n"
 				"\t57600\t230400\n"
-				"\t115200\t460800\n"
+				"\t115200\n"
 				"Default is: " DEFAULT_PORT " 115200"
 	},
 	{
@@ -511,7 +511,7 @@ int process_cmdline(const char *command)
 					printf("Identification\n");
 					retval = ucread(CIDR, &data);
 					if (!retval) {
-						printf("\tCIDR = 0x%08X\n", data);
+						printf("\tCIDR = 0x%08lX\n", data);
 						ucshowproc(data, "\t");
 						if (!ucarch(data)) {
 							printf("\tUnknown architecture!\n");
@@ -527,20 +527,20 @@ int process_cmdline(const char *command)
 					printf("Embedded Flash Controller (EFC)\n");
 					retval = ucread(FMR, &data);
 					if (!retval) {
-						printf("\tFMR = 0x%08X\n", data);
+						printf("\tFMR = 0x%08lX\n", data);
 						printf("\t  Flash Status: %s\n", data & MC_FMR_FRDY ? "READY" : "BUSY");
-						printf("\t  Errors: PROGE: %d LOCKE: %d\n", data & MC_FMR_PROGE, data & MC_FMR_PROGE);
+						printf("\t  Errors: PROGE: %lu LOCKE: %lu\n", data & MC_FMR_PROGE, data & MC_FMR_PROGE);
 						printf("\t  Erase Before Programming: %s\n", data & MC_FMR_NEBP ? "NO" : "YES");
-						printf("\t  Flash Wait State:\n\t\tRead: %d cycles\n\t\tWrite: %d cycles\n",
+						printf("\t  Flash Wait State:\n\t\tRead: %lu cycles\n\t\tWrite: %lu cycles\n",
 						((data & MC_FMR_FWS_MASK) >> MC_FMR_FWS_SHIFT) + 1,
 						((data & MC_FMR_FWS_MASK) >> MC_FMR_FWS_SHIFT) == 3 ? ((data & MC_FMR_FWS_MASK) >> MC_FMR_FWS_SHIFT) + 1 : ((data & MC_FMR_FWS_MASK) >> MC_FMR_FWS_SHIFT) + 2);
-						printf("\t  Flash Microsecond Cycle Number: %d\n", (data & MC_FMR_FMCN_MASK) >> MC_FMR_FMCN_SHIFT);
+						printf("\t  Flash Microsecond Cycle Number: %lu\n", (data & MC_FMR_FMCN_MASK) >> MC_FMR_FMCN_SHIFT);
 
 						retval = ucread(FSR, &data);
 						if (!retval) {
-							printf("\tFSR = 0x%08X\n", data);
+							printf("\tFSR = 0x%08lX\n", data);
 							printf("\t  Flash Status: %s\n", data & MC_FSR_FRDY ? "READY" : "BUSY");
-							printf("\t  Errors: PROGE: %d LOCKE: %d\n", data & MC_FSR_PROGE, data & MC_FSR_PROGE);
+							printf("\t  Errors: PROGE: %lu LOCKE: %lu\n", data & MC_FSR_PROGE, data & MC_FSR_PROGE);
 							printf("\t  Security bit: %s\n", data & MC_FSR_SECURITY ? "Active" : "Inactive");
 							printf("\t  General-purpose NVM\n\t\tGPNVM0: %d BOD:\t     %s\n\t\tGPNVM1: %d BOD Reset: %s\n\t\tGPNVM2: %d Memory:    %s\n",
 							data & MC_FSR_GPNVM0 ? 1 : 0, data & MC_FSR_GPNVM0 ? "Enabled" : "Disabled",
@@ -576,7 +576,7 @@ int process_cmdline(const char *command)
 					retval = ERR_INVPARAM;
 				} else {
 					if (data & (~0xFFFF)) {
-						fprintf(stderr, "Invalid LOCKS value '0x%08X'\n", data);
+						fprintf(stderr, "Invalid LOCKS value '0x%08lX'\n", data);
 						retval = ERR_INVPARAM;
 					} else {
 						retval = ucsetlocks(data);
@@ -603,7 +603,7 @@ int process_cmdline(const char *command)
 					retval = ERR_INVPARAM;
 				} else {
 					if (data > 7) {
-						fprintf(stderr, "Invalid GPNVM value '0x%08X'\n", data);
+						fprintf(stderr, "Invalid GPNVM value '0x%08lX'\n", data);
 						retval = ERR_INVPARAM;
 					} else {
 						retval = ucsetnvm(data);

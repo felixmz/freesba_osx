@@ -25,6 +25,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
+#include <unistd.h> //  defines same read() and open() functions as in comm.c
 
 #include "defs.h"
 #include "batch.h"

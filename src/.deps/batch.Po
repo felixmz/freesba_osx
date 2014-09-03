@@ -64,7 +64,11 @@ batch.o: batch.c /usr/include/sys/types.h /usr/include/sys/appleapiopts.h \
   /usr/include/sys/fcntl.h /usr/include/sys/_types/_o_sync.h \
   /usr/include/sys/_types/_o_dsync.h /usr/include/sys/_types/_seek_set.h \
   /usr/include/errno.h /usr/include/sys/errno.h /usr/include/string.h \
-  /usr/include/strings.h /usr/include/secure/_string.h defs.h batch.h
+  /usr/include/strings.h /usr/include/secure/_string.h \
+  /usr/include/unistd.h /usr/include/sys/unistd.h \
+  /usr/include/sys/_types/_posix_vdisable.h /usr/include/sys/select.h \
+  /usr/include/sys/_select.h /usr/include/sys/_types/_uuid_t.h \
+  /usr/include/gethostuuid.h defs.h batch.h
 
 /usr/include/sys/types.h:
 
@@ -287,6 +291,20 @@ batch.o: batch.c /usr/include/sys/types.h /usr/include/sys/appleapiopts.h \
 /usr/include/strings.h:
 
 /usr/include/secure/_string.h:
+
+/usr/include/unistd.h:
+
+/usr/include/sys/unistd.h:
+
+/usr/include/sys/_types/_posix_vdisable.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/sys/_select.h:
+
+/usr/include/sys/_types/_uuid_t.h:
+
+/usr/include/gethostuuid.h:
 
 defs.h:
 

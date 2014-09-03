@@ -89,7 +89,7 @@ int savefile(char *name, char *buf, size_t size)
 	}
 	if (retval != size) {
 		char s[256];
-		sprintf(s, "Writen %d bytes while %d requested", retval, size);
+		sprintf(s, "Writen %d bytes while %zu requested", retval, size);
 		perror(s);
 		retval = ERR_IO;
 	} else {

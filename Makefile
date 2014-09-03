@@ -83,7 +83,7 @@ AUTOMAKE = ${SHELL} /Users/johanna/Desktop/freesba-0.3.5/missing --run automake-
 AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2
+CFLAGS = -g -O2 -Wno-pointer-sign -Wno-format
 CPP = gcc -E
 CPPFLAGS = 
 CXX = g++
