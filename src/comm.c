@@ -23,6 +23,8 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "defs.h"
 #include "comm.h"
@@ -134,10 +136,10 @@ static void ios_init(int b)
 		case 230400:
 			baud = B230400;
 			break;
-		case 460800:
+/*		case 460800:
 			baud = B460800;
 			break;
-	}
+*/	}
 	cfsetospeed(&ios, baud);
 	cfsetispeed(&ios, baud);
 }
@@ -167,10 +169,10 @@ void comm_info()
 		case B230400:
 			printf("230400");
 			break;
-		case B460800:
+/*		case B460800:
 			printf("460800");
 			break;
-		case B115200:
+*/		case B115200:
 		default:
 			printf("115200");
 			break;

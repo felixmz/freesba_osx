@@ -16,9 +16,9 @@
 srcdir = .
 top_srcdir = .
 
-pkgdatadir = $(datadir)/samba
-pkglibdir = $(libdir)/samba
-pkgincludedir = $(includedir)/samba
+pkgdatadir = $(datadir)/$(PACKAGE)
+pkglibdir = $(libdir)/$(PACKAGE)
+pkgincludedir = $(includedir)/$(PACKAGE)
 top_builddir = .
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 INSTALL = /usr/bin/install -c
@@ -113,7 +113,7 @@ LN_S = ln -s
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /Users/johanna/Desktop/freesba-0.3.5/missing --run makeinfo
 OBJEXT = o
-PACKAGE = samba
+PACKAGE = freesba
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = 
 PACKAGE_STRING = 
