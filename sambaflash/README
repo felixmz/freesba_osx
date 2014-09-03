@@ -1,0 +1,26 @@
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+sambaflash (SAM-BA Flash) is a little program
+which is used by samba for flash programming.
+
+samba (SAM-BA) is a SAM Boot Agent for Atmel AT91SAM microcontrollers.
+It is interfaces with SAM-BA firmware in microcontrollers
+and allow SRAM and Flash programming, view registers etc.
+
+When the samba 'flash' command is given, this application is
+loaded into RAM and is executed for every page. samba communicates with this
+application to perform the actual FLASH programming. Once the process is
+complete, control returns to SAM-BA.
+
+The contents of this directory are provided only for reference. There is no
+need to compile this application as it is already a part of samba.
+
+Specifically, the sambaflash.c file in samba contains an embedded version of
+the binary image for this program (sambaflash.bin), obtained by typing
+'make'. If you want to make changes, then recompile this program and update
+sambaflash.c with the new file.
+
+Author: Yury Ovcharenko <amwsoft@gmail.com>

@@ -1,0 +1,42 @@
+2007-03-28  Yuri Ovcharenko
+
+	* BUGFIX release.
+	* version 0.3.4
+	* In some cases the first flash page is not programmed correctly.
+	  I don't know why.
+	  Fixed by adding flash page contents comparison with data to be programmed
+	  and try to reprogram page up to four times.
+
+2007-02-19  Yuri Ovcharenko
+
+	* Public release.
+	* version 0.3.3
+	* Added GPNVM2 bit handling.
+
+2006-10-23  Yuri Ovcharenko
+
+	* Public release.
+	* version 0.3.2
+	* Added batch mode support.
+
+2006-10-20  Yuri Ovcharenko
+
+	* version 0.3.1
+	* Code revised and mostly rewriten.
+	* Added recv command.
+
+2006-10-12  Yuri Ovcharenko
+
+	* version 0.3.0.
+	* Project restructured and rewriten.
+	* Smart open/close behavior implemented.
+		If port not opened before command execution then
+		port closed after command execution.
+	* Added command file support.
+
+2006-09-12  Yuri Ovcharenko
+
+	* Public release.
+	* version 0.2.0.
+	* First public release.
+	* read/write RAM and Flash programming.

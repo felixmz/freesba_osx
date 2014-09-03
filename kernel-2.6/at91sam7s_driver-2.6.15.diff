@@ -1,0 +1,12 @@
+--- linux/drivers/usb/class/cdc-acm.c-orig	2006-06-14 12:28:22.000000000 +0300
++++ linux/drivers/usb/class/cdc-acm.c	2006-06-14 12:29:43.000000000 +0300
+@@ -982,6 +982,9 @@
+ 	{ USB_DEVICE(0x0482, 0x0203), /* KYOCERA AH-K3001V */
+ 	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
+ 	},
++	{ USB_DEVICE(0x03EB, 0x6124), /* Atmel AT91SAM7S microcontrollers (SAM-BA) */
++	.driver_info = NO_UNION_NORMAL, /* has no union descriptor */
++	},
+ 	/* control interfaces with various AT-command sets */
+ 	{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ACM,
+ 		USB_CDC_ACM_PROTO_AT_V25TER) },

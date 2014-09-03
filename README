@@ -1,0 +1,83 @@
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+samba (SAM-BA) is a SAM Boot Agent for
+Atmel AT91SAM microcontrollers.
+It is interfaces with SAM-BA firmware in microcontrollers
+and allow SRAM and Flash programming, view registers etc.
+
+samba uses sambaflasf programm. sambaflash is a small program
+for AT91SAM7 microcontrollers (FirmWare) designed to help
+flash programming.
+sambaflash provided in sambaflash subdirectory.
+The contents of this directory are provided only for reference. There is no
+need to compile this application as it is already a part of samba.
+See README in the sambaflash subdirectory for detail.
+
+Requirements:
+	readline
+	ncurses (used by readline)
+
+Notes:
+
+samba can communicate with microcontroller over
+serial or USB ACM interface. For communicating
+over USB ACM interface You need "USB Communications Device Class Driver"
+configured in kernel. You can use instruction below to prepare kernel.
+This instruction is extracted from Sam_I_Am:
+	Copyright 2006 by Andrew Sterian All Rights Reserved.
+	http://claymore.engineer.gvsu.edu/~steriana
+	mailto: steriana@claymore.engineer.gvsu.edu
+Also You can use patch in the kernel-2.6 subdirectory.
+
+=============================================================================
+USB Communications Device Class Driver
+
+The SAM-BA documentation indicates that it configures the AT91SAM7S microcontroller as
+a USB Communications Device Class device.
+Thus, the Linux acm (for 2.4 kernels) or cdc-acm (for 2.6 kernels) should be usable.
+No instructions for the 2.4 kernel acm driver are available yet.
+For the 2.6 kernel cdc-acm driver, the driver source code must be patched
+and the kernel module recompiled in order to recognize the microcontroller.
+The first step is to modify the cdc-acm.c file in the kernel source tree
+(e.g., /usr/src/linux-2.6.14.3/drivers/usb/class/cdc-acm.c) to add the
+following three lines marked with '+' signs:
+
+{ USB_DEVICE(0x0482, 0x0203), /* KYOCERA AH-K3001V */
+      .driver_info = NO_UNION_NORMAL, /* has no union descriptor */
+},
+    + { USB_DEVICE(0x03EB, 0x6124), /* Atmel AT91SAM7S microcontrollers (SAM-BA) */
+    + .driver_info = NO_UNION_NORMAL,
+    + },
+      /* control interfaces with various AT-command sets */
+{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ACM,
+
+Next, recompile the kernel and ensure that the cdc-acm driver is compiled as a module.
+The new kernel has to be installed and booted. The new kernel module can then be installed with (as root):
+
+	modprobe cdc-acm
+
+When you plug in the microcontroller device, you should be able to communicate with it
+using a filename of /dev/usb/acm/0, or /dev/ttyACM0, or other names depending on your distribution.
+You can try to find the right name on your system using the same type of command used to find
+the usbserial devices from the previous section: 
+
+	find /dev -inum `ls -liR /dev | fgrep "166," | head -1 | sed -e "s/^ *//" | cut -d" " -f1`
+
+The major device number for the cdc-acm module is 166.
+If this special file has not been created, you can create it yourself (as root):
+
+	mkdir -p /dev/usb/acm
+	chmod -R a+rx /dev/usb
+	mknod /dev/usb/acm/0 c 166 0
+	mknod /dev/usb/acm/1 c 166 1
+	mknod /dev/usb/acm/2 c 166 2
+	chmod -R a+rwx /dev/usb/acm
+
+The above allows anyone on the system access to these devices.
+You may want to modify your chmod commands for alternative access arrangements if you are running a multi-user system.
+=============================================================================
+
+Author: Yury Ovcharenko <amwsoft@gmail.com>
