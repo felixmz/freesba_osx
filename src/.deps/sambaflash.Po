@@ -1,1 +1,1 @@
-# dummy
+sambaflash.o: sambaflash.c
